@@ -1,0 +1,23 @@
+.loadMoreBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100px;
+  height: 50px;
+  padding: 10px;
+
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 15px;
+
+  border: cornflowerblue;
+  border-radius: 5px;
+  background-color: cornflowerblue;
+  cursor: pointer;
+  color: #fff;
+}
+
+.loadMoreBtn:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}

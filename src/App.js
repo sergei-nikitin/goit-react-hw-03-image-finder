@@ -2,46 +2,25 @@ import React, { Component } from "react";
 // import { ToastContainer } from "react-toastify";
 import SearchBar from "./components/searchbar";
 import GalleryImage from "./components/imageGallery";
-import ImageGalleryItem from "./components/imageGalleryItem";
 // import Loader from "./components/loaderr";
 import Modal from "./components/modal";
 import Button from "./components/button";
+import Up from "./components/buttonUp";
 
 class App extends Component {
   state = {
     page: 1,
     query: "",
     showModal: false,
+    largeImageURL: "",
   };
 
-  componentDidMount() {}
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   const prevQuery = prevProps.query;
-  //   const nextQuery = this.props.query;
-  //   if (prevQuery !== nextQuery) {
-  //     this.fetchImages(nextQuery, this.state.page);
-  //   }
-  // }
-
-  // fetchImages(query, page) {
-  //    this.setState({ isLoading: rtue })
-  //   return fetch(
-  //     `${BASE_URL}?q=${query}&page=${page}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
-  //   )
-  //     .then((response) => response.json())
-  //     .then((res) => res.hits)
-  //     .then((hits) =>
-  //       this.setState((prevState) => ({
-  //         foto: [...prevState.foto, ...hits],
-  //         page: prevState.page + 1,
-  //       }))
-  //     )
-  //     .cath((error) => this.setState({ error }))
-  //     .finaly(() => {
-  //       this.setState({ isLoading: false });
-  //     });
-  // }
+  componentDidMount() {
+    this.scrollDown();
+  }
+  componentDidUpdate() {
+    this.scrollDown();
+  }
 
   toogleModal = () => {
     this.setState(({ showModal }) => ({
@@ -49,33 +28,53 @@ class App extends Component {
     }));
   };
 
+  getLargeImgUrl = (query) => {
+    this.setState({ largeImageURL: query });
+    this.setState({ showModal: true });
+  };
+
   handleFormSubmit = (query) => {
     this.setState({ query });
+    this.setState({ page: 1 });
   };
 
   loadMore = () => {
-    this.setState({ page: +1 });
+    this.setState((prevState) => ({
+      page: prevState.page + 1,
+    }));
+  };
 
+  scrollDown() {
     window.scrollTo({
-      top: document.documentElement.scrollHeight,
+      top: document.body.scrollHeight,
+      left: 0,
       behavior: "smooth",
     });
-  };
+  }
+
+  scrollUp() {
+    window.scrollTo(0, 0);
+  }
 
   render() {
     return (
       <div>
         <SearchBar onSubmit={this.handleFormSubmit} />
-        <GalleryImage query={this.state.query} page={this.state.page} />
+        <GalleryImage
+          query={this.state.query}
+          page={this.state.page}
+          scrollDown={this.scrollDown}
+          getLargeImgUrl={this.getLargeImgUrl}
+        />
 
         {this.state.query.length > 0 && <Button onLoadMore={this.loadMore} />}
+        {this.state.query.length > 0 && <Up scrollUp={this.scrollUp} />}
 
-        {/* <Loader></Loader> */}
-
-        {this.showModal && (
-          <Modal onClose={this.toogleModal}>
-            <ImageGalleryItem></ImageGalleryItem>
-          </Modal>
+        {this.state.showModal && (
+          <Modal
+            onClose={this.toogleModal}
+            large={Object.values(this.state.largeImageURL)}
+          ></Modal>
         )}
 
         {/* <ToastContainer autoClose={2500} /> */}

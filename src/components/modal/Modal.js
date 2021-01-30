@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { createPortal } from "react-dom";
 import styles from "./Modal.module.css";
+import PropTypes from "prop-types";
 
 const modalRoot = document.querySelector("#modal-root");
 
@@ -14,13 +15,13 @@ export default class Modal extends Component {
 
   handleKeyDown = (e) => {
     if (e.code === "Escape") {
-      this.props.onclose();
+      this.props.onClose();
     }
   };
 
   handleBackdropClick = (e) => {
     if (e.currentTarget === e.target) {
-      this.props.onclose();
+      this.props.onClose();
     }
   };
 
@@ -28,10 +29,17 @@ export default class Modal extends Component {
     return createPortal(
       <div className={styles.Overlay} onClick={this.handleBackdropClick}>
         <div className={styles.Modal}>
-          <img src="" alt="" />
+          <img
+            className={styles.largeImg}
+            src={this.props.large}
+            alt="largeFoto"
+          />
         </div>
       </div>,
       modalRoot
     );
   }
 }
+Modal.propTypes = {
+  src: PropTypes.string,
+};

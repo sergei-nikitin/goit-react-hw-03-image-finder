@@ -10,7 +10,7 @@ const ImageGalleryItem = ({ id, src, largeImageURL, onClickImage }) => {
         src={src}
         id={id}
         data-source={largeImageURL}
-        onClick={onClickImage}
+        onClick={() => onClickImage({ largeImageURL })}
         alt=""
       ></img>
     </li>
@@ -19,7 +19,6 @@ const ImageGalleryItem = ({ id, src, largeImageURL, onClickImage }) => {
 
 ImageGalleryItem.propTypes = {
   id: PropTypes.number.isRequired,
-  webformatURL: PropTypes.string.isRequired,
   largeImageURL: PropTypes.string.isRequired,
   onClickImage: PropTypes.func.isRequired,
 };

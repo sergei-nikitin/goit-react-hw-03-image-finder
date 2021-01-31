@@ -27,7 +27,13 @@ export default class GalleryImage extends Component {
         `${BASE_URL}?q=${nextQuery}&page=${nextPage}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
       )
         .then((response) => response.json())
-        .then((res) => res.hits)
+        .then((res) => {
+          if (res.totalHits === 0) {
+            return Promise.reject(new Error("Такой категории фото нет"));
+          }
+          this.setState({ error: null });
+          return res.hits;
+        })
         .then((hits) =>
           this.setState((prevState) => ({
             foto: [...prevState.foto, ...hits],
@@ -46,12 +52,14 @@ export default class GalleryImage extends Component {
   };
 
   render() {
+    const { loading, foto, error } = this.state;
     return (
       <div>
-        {this.state.loading && <Loader />}
+        {error && <h2>{error.message}</h2>}
+        {loading && <Loader />}
 
         <ul className={styles.galleryList}>
-          {this.state.foto.map((element) => (
+          {foto.map((element) => (
             <ImageGalleryItem
               src={element.webformatURL}
               key={element.id}

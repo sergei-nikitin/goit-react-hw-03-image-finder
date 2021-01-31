@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 import styles from "./SearchBar.module.css";
 import PropTypes from "prop-types";
+import { ReactComponent as IconSearch } from "../../icons/search-outline.svg";
 
 class SearchBar extends Component {
   state = {
@@ -12,8 +13,7 @@ class SearchBar extends Component {
     event.preventDefault();
 
     if (this.state.value.trim() === "") {
-      return alert("Введите название");
-      // return toast.error("Введите название");
+      return toast.error("Введите категорию фото ");
     }
 
     this.props.onSubmit(this.state.value);
@@ -32,7 +32,7 @@ class SearchBar extends Component {
       <header className={styles.Searchbar}>
         <form onSubmit={this.handleSubmit} className={styles.SearchForm}>
           <button type="submit" className={styles.SearchFormButton}>
-            <span className={styles.SearchFormButtonLabel}>Search</span>
+            <IconSearch width="30" height="30" />
           </button>
 
           <input

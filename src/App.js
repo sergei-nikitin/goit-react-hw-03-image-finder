@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-// import { ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import SearchBar from "./components/searchbar";
 import GalleryImage from "./components/imageGallery";
 // import Loader from "./components/loaderr";
 import Modal from "./components/modal";
 import Button from "./components/button";
 import Up from "./components/buttonUp";
+import { ReactComponent as UpIcon } from "./icons/arrow-up-outline.svg";
 
 class App extends Component {
   state = {
@@ -60,6 +62,7 @@ class App extends Component {
     return (
       <div>
         <SearchBar onSubmit={this.handleFormSubmit} />
+
         <GalleryImage
           query={this.state.query}
           page={this.state.page}
@@ -68,7 +71,11 @@ class App extends Component {
         />
 
         {this.state.query.length > 0 && <Button onLoadMore={this.loadMore} />}
-        {this.state.query.length > 0 && <Up scrollUp={this.scrollUp} />}
+        {this.state.query.length > 0 && (
+          <Up scrollUp={this.scrollUp}>
+            <UpIcon width="40" height="40" />
+          </Up>
+        )}
 
         {this.state.showModal && (
           <Modal
@@ -77,7 +84,7 @@ class App extends Component {
           ></Modal>
         )}
 
-        {/* <ToastContainer autoClose={2500} /> */}
+        <ToastContainer autoClose={3000} />
       </div>
     );
   }

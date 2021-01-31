@@ -1,12 +1,17 @@
 .Searchbar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
   height: 50px;
 
-  padding: 10px;
   background-color: cornflowerblue;
+}
+
+.SearchForm {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  padding-top: 10px;
 }
 
 .SearchFormInput {
@@ -19,8 +24,10 @@
 }
 
 .SearchFormButton {
-  height: 28px;
-  padding: 5px;
+  display: flex;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
   margin-right: 10px;
 
   border-radius: 3px;
